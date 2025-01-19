@@ -1,5 +1,6 @@
 package com.lavrent.leash
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -26,11 +27,14 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.platform.LocalContext
+import androidx.core.graphics.drawable.toBitmap
 import com.lavrent.leash.ui.theme.LeashTheme
 
 class MainActivity : ComponentActivity() {
@@ -48,6 +52,11 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LeashScaffold() {
+    // TODO NOW
+    val context = LocalContext.current
+    val pm = context.packageManager
+    val icon = pm.getApplicationIcon("com.instagram.android")
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -65,9 +74,9 @@ fun LeashScaffold() {
                 actions = {
                     IconButton(onClick = {}) {
                         Icon(
-                            modifier = Modifier.size(32.dp),
                             imageVector = Icons.Filled.Info,
-                            contentDescription = "About Leash"
+                            contentDescription = "About Leash",
+                            modifier = Modifier.size(32.dp)
                         )
                     }
                 }
@@ -89,14 +98,18 @@ fun LeashScaffold() {
         Column(
             modifier = Modifier.padding(innerPadding),
         ) {
-            LeashCard()
-            LeashCard()
+            LeashCard(icon)
+            LeashCard(icon)
+            Icon(
+                bitmap = icon.toBitmap().asImageBitmap(),
+                contentDescription = "Leashed app icon"
+            )
         }
     }
 }
 
 @Composable
-fun LeashCard() {
+fun LeashCard(icon: Drawable) {
     Card(
         modifier = Modifier
             .padding(horizontal = 16.dp, vertical = 4.dp)

@@ -8,4 +8,8 @@ Work in progress
 - properly get permission to create shorcuts to apps
 - access other apps' icons
 - align top bar with card
+- figure out compilation instructions
+- test other devices:
+    - tablet
+    - foldable
 - ...
